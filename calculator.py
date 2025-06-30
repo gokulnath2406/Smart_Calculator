@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        :root {
+            --bg-color: #f0f2f5;
+            --text-color: #000;
+            --calculator-bg: #ffffff;
+            --display-bg: #e9ecef;
+            --button-number-bg: #dee2e6;
+            --button-operator-bg: #0d6efd;
+            --button-equal-bg: #198754;
+            --button-clear-bg: #dc3545;
+        }
+
+        .dark-mode {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --calculator-bg: #1e1e1e;
+            --display-bg: #2a2a2a;
+            --button-number-bg: #3a3a3a;
+            --button-operator-bg: #007bff;
+            --button-equal-bg: #28a745;
+            --button-clear-bg: #dc3545;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #calculator {
+            background-color: var(--calculator-bg);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 350px;
+        }
+
+        #display {
+            width: 100%;
+            height: 60px;
+            font-size: 26px;
+            text-align: right;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background-color: var(--display-bg);
+            margin-bottom: 15px;
+            color: var(--text-color);
+            box-sizing: border-box;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .button {
+            height: 60px;
+            font-size: 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .button:hover {
+            opacity: 0.9;
+        }
+
+        .number {
+            background-color: var(--button-number-bg);
+        }
+
+        .operator {
+            background-color: var(--button-operator-bg);
+            color: white;
+        }
+
+        .equal {
+            background-color: var(--button-equal-bg);
+            color: white;
+            grid-column: span 2;
+        }
+
+        .clear {
+            background-color: var(--button-clear-bg);
+            color: white;
+            grid-column: span 2;
+        }
+
+        .theme-toggle {
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background-color: #6c757d;
+            color: white;
+        }
+
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            #display {
+                font-size: 22px;
+                height: 50px;
+            }
+
+            .button {
+                height: 50px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+    <h1>Smart Calculator</h1>
+
+    <div id="calculator">
+        <input type="text" id="display" disabled>
+
+        <div class="button-grid">
+            <button class="button number" onclick="press('7')">7</button>
+            <button class="button number" onclick="press('8')">8</button>
+            <button class="button number" onclick="press('9')">9</button>
+            <button class="button operator" onclick="press('/')">÷</button>
+
+            <button class="button number" onclick="press('4')">4</button>
+            <button class="button number" onclick="press('5')">5</button>
+            <button class="button number" onclick="press('6')">6</button>
+            <button class="button operator" onclick="press('*')">×</button>
+
+            <button class="button number" onclick="press('1')">1</button>
+            <button class="button number" onclick="press('2')">2</button>
+            <button class="button number" onclick="press('3')">3</button>
+            <button class="button operator" onclick="press('-')">−</button>
+
+            <button class="button number" onclick="press('0')">0</button>
+            <button class="button number" onclick="press('.')">.</button>
+            <button class="button equal" onclick="calculate()">=</button>
+            <button class="button operator" onclick="press('+')">+</button>
+
+            <button class="button clear" onclick="clearDisplay()">Clear</button>
+        </div>
+    </div>
+
+    <script>
+        function press(val) {
+            document.getElementById("display").value += val;
+        }
+
+        function calculate() {
+            try {
+                let result = eval(document.getElementById("display").value);
+                document.getElementById("display").value = result;
+            } catch {
+                document.getElementById("display").value = "Error";
+            }
+        }
+
+        function clearDisplay() {
+            document.getElementById("display").value = "";
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+        }
+    </script>
+</body>
+</html>
